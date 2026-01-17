@@ -209,14 +209,14 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
--- For C/C++ replace tabs with 2 spaces, LLVM style.
+-- For C/C++ replace tabs with 4 spaces, LLVM style.
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'c', 'cpp' },
   callback = function()
     vim.bo.expandtab = true
-    vim.bo.shiftwidth = 2
-    vim.bo.tabstop = 2
-    vim.bo.softtabstop = 2
+    vim.bo.shiftwidth = 4
+    vim.bo.tabstop = 4
+    vim.bo.softtabstop = 4
   end,
 })
 
@@ -252,6 +252,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     error('Error cloning lazy.nvim:\n' .. out)
   end
 end
+
+-- Floating terminal that keeps history even when closed
+vim.keymap.set('n', '<leader>`', function()
+  require('toggleterm').toggle(1, 15)
+end, { desc = 'Toggle terminal' })
 
 ---@type vim.Option
 local rtp = vim.opt.rtp
