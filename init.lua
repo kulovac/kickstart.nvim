@@ -710,6 +710,7 @@ require('lazy').setup({
         rust_analyzer = {},
         vhdl_ls = {},
         cmake = {},
+        verible = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -734,6 +735,33 @@ require('lazy').setup({
           },
         },
       }
+
+      vim.lsp.config('slang-server', {
+        cmd = { 'slang-server' },
+        root_markers = { '.git', '.slang' },
+        filetypes = {
+          'systemverilog',
+          'verilog',
+        },
+      })
+      vim.lsp.enable 'slang-server'
+
+      vim.lsp.config('verible', {
+        cmd = { 'verible-verilog-ls', '--push_diagnostic_notifications=false' },
+        filetypes = {
+          'systemverilog',
+          'verilog',
+        },
+        on_attach = function(client, _)
+          -- Disable definition, references, implementation, type definition, hover, etc
+          client.server_capabilities.definitionProvider = false
+          client.server_capabilities.referencesProvider = false
+          client.server_capabilities.implementationProvider = false
+          client.server_capabilities.typeDefinitionProvider = false
+          client.server_capabilities.hoverProvider = false
+          client.server_capabilities.signatureHelpProvider = false
+        end,
+      })
 
       -- Ensure the servers and tools above are installed
       --

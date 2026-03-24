@@ -17,4 +17,12 @@ return {
       shade_terminals = false,
     },
   },
+  -- slang-server extension for nicer verilog use
+  {
+    'hudson-trading/slang-server.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+    },
+    opts = {},
+  },
 }
