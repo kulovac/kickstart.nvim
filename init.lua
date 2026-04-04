@@ -917,9 +917,9 @@ require('lazy').setup({
 
         ['<S-Tab>'] = {
           function(cmp)
-            if cmp.snippet_active() then
+            if cmp.is_visible() then
               return cmp.snippet_backward()
-            elseif cmp.is_visible() then
+            elseif cmp.snippet_active() then
               return cmp.select_prev()
             else
               return
